@@ -51,7 +51,7 @@ pub fn read<T: Pod>(input: &[u8]) -> &T {
 pub fn read_array<T: Pod>(input: &[u8]) -> &[T] {
     let t_size = mem::size_of::<T>();
     assert!(t_size > 0, "Can't read arrays of zero-sized types");
-    assert!(input.len() % t_size == 0);
+    assert!(input.len() % t_size == 0, "not aligned: {} % {} = {}", input.len(), t_size, input.len() % t_size);
     let addr = input.as_ptr() as usize;
     assert!(addr & (mem::align_of::<T>() - 1) == 0);
 
